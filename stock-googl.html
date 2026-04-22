@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GOOGL — Salesman</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="back-header">
+    <a class="back-btn" href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <span class="back-title">GOOGL</span>
+  </div>
+
+  <div class="stock-hero">
+    <div class="stock-hero-sym">Alphabet</div>
+    <div class="stock-hero-name">NASDAQ · Технологии</div>
+    <div class="stock-hero-price">$168.20</div>
+    <div class="stock-hero-change up">▲ +1.5% (+$2.49) сегодня</div>
+  </div>
+
+  <div class="chart-tabs">
+    <button class="chart-tab active" onclick="loadChart('5d',this)">5Д</button>
+    <button class="chart-tab" onclick="loadChart('1m',this)">1М</button>
+    <button class="chart-tab" onclick="loadChart('1y',this)">1Г</button>
+    <button class="chart-tab" onclick="loadChart('5y',this)">5Л</button>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="stockChart"></canvas>
+  </div>
+
+  <div class="rating-card">
+    <div class="rating-icon">✅</div>
+    <div>
+      <div class="rating-label">Оценка ИИ</div>
+      <div class="rating-val" style="color:var(--green)">Хорошая акция</div>
+      <div class="rating-desc">Google Cloud растёт, Gemini — конкурент GPT</div>
+    </div>
+  </div>
+
+  <div style="padding:0 20px;margin-bottom:16px">
+    <button class="btn-full btn-primary" onclick="window.location.href='portfolio.html'">Купить</button>
+  </div>
+
+  <div class="ai-comment-card">
+    <div class="ai-comment-top">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      ИИ Аналитик
+    </div>
+    <div class="ai-comment-text">
+      Alphabet владеет Google Search, YouTube и Google Cloud. Cloud-сегмент вырос на 28% г/г. Gemini Ultra конкурирует с GPT-4. Реклама остаётся основным доходом — риск при рецессии. Хороший выбор для диверсификации tech-портфеля. Целевой уровень: $185.
+    </div>
+  </div>
+
+  <div style="padding:0 20px;margin-bottom:20px">
+    <button class="btn-full btn-secondary" onclick="window.location.href='ai.html'">Спросить подробнее у ИИ</button>
+  </div>
+
+  <div class="stock-about">
+    <div class="about-title">О компании</div>
+    <div class="about-row"><span class="about-key">Основана</span><span class="about-val">1998 год</span></div>
+    <div class="about-row"><span class="about-key">Основатель</span><span class="about-val">Сергей Брин, Ларри Пейдж</span></div>
+    <div class="about-row"><span class="about-key">Штаб-квартира</span><span class="about-val">Маунтин-Вью, США</span></div>
+    <div class="about-row"><span class="about-key">Сектор</span><span class="about-val">Реклама / Облако / ИИ</span></div>
+    <div class="about-row"><span class="about-key">Рыночная кап.</span><span class="about-val">$2.06 трлн</span></div>
+    <div class="about-row"><span class="about-key">P/E</span><span class="about-val">21.4x</span></div>
+    <div class="about-row"><span class="about-key">52-нед. диапазон</span><span class="about-val">$130 — $202</span></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="main.js"></script>
+  <script>
+    var chartData = {
+      '5d': { labels:['Пн','Вт','Ср','Чт','Пт'], data:[162,164,165,167,168], color:'#4ec994' },
+      '1m': { labels:['01','05','10','15','20','25','30'], data:[150,154,158,156,162,166,168], color:'#4ec994' },
+      '1y': { labels:['Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек','Янв','Фев','Мар'], data:[130,140,152,162,178,170,185,196,202,195,180,168], color:'#4ec994' },
+      '5y': { labels:['2021','2022','2023','2024','2025','2026'], data:[90,80,105,140,185,168], color:'#4ec994' }
+    };
+    var ctx = document.getElementById('stockChart').getContext('2d');
+    var chart;
+    function loadChart(period, btn) {
+      document.querySelectorAll('.chart-tab').forEach(function(t){ t.classList.remove('active'); });
+      btn.classList.add('active');
+      var d = chartData[period];
+      var gradient = ctx.createLinearGradient(0,0,0,160);
+      gradient.addColorStop(0,'rgba(78,201,148,0.18)');
+      gradient.addColorStop(1,'rgba(78,201,148,0)');
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, { type:'line', data:{ labels:d.labels, datasets:[{ data:d.data, borderColor:d.color, borderWidth:2, pointRadius:0, tension:0.4, fill:true, backgroundColor:gradient }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{label:function(c){return '$'+c.parsed.y.toFixed(2);}}, backgroundColor:'#1c1c1c', titleColor:'#a09890', bodyColor:'#f2ede8', borderColor:'rgba(255,255,255,0.06)', borderWidth:1 } }, scales:{ x:{grid:{display:false},ticks:{color:'#5c5650',font:{size:10}}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5c5650',font:{size:10},callback:function(v){return '$'+v;}}} } } });
+    }
+    window.addEventListener('DOMContentLoaded', function(){ document.getElementById('stockChart').height=160; loadChart('5d',document.querySelector('.chart-tab.active')); });
+  </script>
+</body>
+</html>
