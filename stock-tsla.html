@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TSLA — Salesman</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .tv-widget-wrap {
+      margin: 0 20px 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 200px;
+    }
+
+    .chart-tabs {
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="back-header">
     <a class="back-btn" href="index.html">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
     </a>
     <span class="back-title">TSLA</span>
   </div>
 
   <div class="stock-hero">
     <div class="stock-hero-sym">Tesla</div>
-    <div class="stock-hero-name">NASDAQ · Электромобили</div>
-    <div class="stock-hero-price">$248.10</div>
-    <div class="stock-hero-change down">▼ −2.4% (−$6.10) сегодня</div>
+    <div class="stock-hero-name">NASDAQ · Электромобили / Энергетика</div>
+    <div class="stock-hero-price">Загрузка...</div>
+    <div class="stock-hero-change">—</div>
   </div>
 
-  <div class="chart-tabs">
-    <button class="chart-tab active" onclick="loadChart('5d',this)">5Д</button>
-    <button class="chart-tab" onclick="loadChart('1m',this)">1М</button>
-    <button class="chart-tab" onclick="loadChart('1y',this)">1Г</button>
-    <button class="chart-tab" onclick="loadChart('5y',this)">5Л</button>
-  </div>
-  <div class="chart-wrap">
-    <canvas id="stockChart"></canvas>
+  <div class="tv-widget-wrap">
+    <div class="tradingview-widget-container" style="height:100%">
+      <div id="tv_chart_tsla" style="height:100%"></div>
+    </div>
   </div>
 
   <div class="rating-card">
@@ -37,7 +49,7 @@
     <div>
       <div class="rating-label">Оценка ИИ</div>
       <div class="rating-val" style="color:var(--gold)">Высокий риск</div>
-      <div class="rating-desc">Волатильная акция, давление конкурентов</div>
+      <div class="rating-desc">Tesla сталкивается с нарастающей конкуренцией со стороны BYD...</div>
     </div>
   </div>
 
@@ -47,16 +59,20 @@
 
   <div class="ai-comment-card">
     <div class="ai-comment-top">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
       ИИ Аналитик
     </div>
-    <div class="ai-comment-text">
-      Tesla сталкивается с нарастающей конкуренцией со стороны BYD и GM. Продажи в Европе упали на 15% м/м. Однако долгосрочно FSD-подписка и бизнес хранения энергии — мощные катализаторы. Уровень $230 выступает ключевой поддержкой. Для спекулятивных позиций — интересно, для консервативных — осторожно.
-    </div>
+    <div class="ai-comment-text">Tesla сталкивается с нарастающей конкуренцией со стороны BYD и GM. Продажи в Европе
+      снизились. Долгосрочно FSD-подписка и бизнес хранения энергии — мощные катализаторы роста.</div>
   </div>
 
   <div style="padding:0 20px;margin-bottom:20px">
-    <button class="btn-full btn-secondary" onclick="window.location.href='ai.html?stock=TSLA'">Спросить подробнее у ИИ</button>
+    <button class="btn-full btn-secondary" onclick="window.location.href='ai.html?stock=TSLA'">Спросить подробнее у
+      ИИ</button>
   </div>
 
   <div class="stock-about">
@@ -64,34 +80,44 @@
     <div class="about-row"><span class="about-key">Основана</span><span class="about-val">2003 год</span></div>
     <div class="about-row"><span class="about-key">Основатель</span><span class="about-val">Илон Маск</span></div>
     <div class="about-row"><span class="about-key">Штаб-квартира</span><span class="about-val">Остин, США</span></div>
-    <div class="about-row"><span class="about-key">Сектор</span><span class="about-val">Электромобили / Энергетика</span></div>
-    <div class="about-row"><span class="about-key">Рыночная кап.</span><span class="about-val">$791 млрд</span></div>
-    <div class="about-row"><span class="about-key">P/E</span><span class="about-val">52.3x</span></div>
-    <div class="about-row"><span class="about-key">52-нед. диапазон</span><span class="about-val">$138 — $488</span></div>
+    <div class="about-row"><span class="about-key">Сектор</span><span class="about-val">Электромобили /
+        Энергетика</span></div>
+    <div class="about-row"><span class="about-key">Открытие</span><span class="about-val"><span
+          data-field="open">—</span></span></div>
+    <div class="about-row"><span class="about-key">Максимум дня</span><span class="about-val"><span
+          data-field="high">—</span></span></div>
+    <div class="about-row"><span class="about-key">Минимум дня</span><span class="about-val"><span
+          data-field="low">—</span></span></div>
+    <div class="about-row"><span class="about-key">Пред. закрытие</span><span class="about-val"><span
+          data-field="prev_close">—</span></span></div>
+    <div class="about-row"><span class="about-key">Объём</span><span class="about-val"><span
+          data-field="volume">—</span></span></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="main.js"></script>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
   <script>
-    var chartData = {
-      '5d': { labels:['Пн','Вт','Ср','Чт','Пт'], data:[260,258,254,252,248], color:'#e85c5c' },
-      '1m': { labels:['01','05','10','15','20','25','30'], data:[290,280,270,265,258,252,248], color:'#e85c5c' },
-      '1y': { labels:['Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек','Янв','Фев','Мар'], data:[180,200,240,280,320,300,350,420,450,380,300,248], color:'#e85c5c' },
-      '5y': { labels:['2021','2022','2023','2024','2025','2026'], data:[220,120,200,240,380,248], color:'#e85c5c' }
-    };
-    var ctx = document.getElementById('stockChart').getContext('2d');
-    var chart;
-    function loadChart(period, btn) {
-      document.querySelectorAll('.chart-tab').forEach(function(t){ t.classList.remove('active'); });
-      btn.classList.add('active');
-      var d = chartData[period];
-      var gradient = ctx.createLinearGradient(0,0,0,160);
-      gradient.addColorStop(0,'rgba(232,92,92,0.18)');
-      gradient.addColorStop(1,'rgba(232,92,92,0)');
-      if (chart) chart.destroy();
-      chart = new Chart(ctx, { type:'line', data:{ labels:d.labels, datasets:[{ data:d.data, borderColor:d.color, borderWidth:2, pointRadius:0, tension:0.4, fill:true, backgroundColor:gradient }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{label:function(c){return '$'+c.parsed.y.toFixed(2);}}, backgroundColor:'#1c1c1c', titleColor:'#a09890', bodyColor:'#f2ede8', borderColor:'rgba(255,255,255,0.06)', borderWidth:1 } }, scales:{ x:{grid:{display:false},ticks:{color:'#5c5650',font:{size:10}}}, y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5c5650',font:{size:10},callback:function(v){return '$'+v;}}} } } });
-    }
-    window.addEventListener('DOMContentLoaded', function(){ document.getElementById('stockChart').height=160; loadChart('5d',document.querySelector('.chart-tab.active')); });
+    new TradingView.widget({
+      container_id: 'tv_chart_tsla',
+      symbol: 'NASDAQ:TSLA',
+      interval: 'D',
+      timezone: 'America/New_York',
+      theme: 'dark',
+      style: '1',
+      locale: 'ru',
+      toolbar_bg: '#141414',
+      enable_publishing: false,
+      hide_top_toolbar: false,
+      hide_legend: true,
+      save_image: false,
+      height: 200,
+      width: '100%',
+      hide_side_toolbar: true,
+      allow_symbol_change: false,
+      backgroundColor: '#141414',
+      gridColor: 'rgba(255,255,255,0.04)',
+    });
   </script>
+  <script src="main.js"></script>
 </body>
+
 </html>
